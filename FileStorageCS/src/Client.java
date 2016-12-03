@@ -13,12 +13,20 @@ public class Client {
 
 		try{
 			CStorage cs = new CStorage();
-			Registry registry = LocateRegistry.getRegistry(host);
-			SStorageInterface stub = (SStorageInterface) registry.lookup("Storage");
+			//registry for server 1
+			Registry registry1 = LocateRegistry.getRegistry(host);
 
+			//registry for server 2
+			Registry registry2 = LocateRegistry.getRegistry(host, 2001);
+			
+			SStorageInterface stub1 = (SStorageInterface) registry1.lookup("Storage_1");
+			
+			SStorageInterface stub2 = (SStorageInterface) registry2.lookup("Storage_2");
+			
 			Scanner sc = new Scanner(System.in);
 			boolean stop = false;
 
+			//TODO replicar comandos para servidor 2
 			do{
 				System.out.println("Upload PDF [1] \nList PDFs [2] \nDownload PDF [3] \nDelete PDF [4] \nExit [5]\n");
 				Integer input = sc.nextInt();
@@ -27,18 +35,18 @@ public class Client {
 				case 1:
 					System.out.println("Enter the file name: ");
 					cs.setFileName(sc.nextLine());
-					cs.uploadPDF(stub);
+					cs.uploadPDF(stub1);
 					break;
 				case 2:
-					System.out.println(stub.getPDFList());
+					System.out.println(stub1.getPDFList());
 					break;
 				case 3:
 					System.out.println("Enter the file name: ");
-					stub.sendPDF(cs, sc.nextLine());
+					stub1.sendPDF(cs, sc.nextLine());
 					break;
 				case 4:
 					System.out.println("Enter the file name: ");
-					stub.deletePDF(sc.nextLine());
+					stub1.deletePDF(sc.nextLine());
 					break;
 				case 5:
 					System.out.println("Bye!");

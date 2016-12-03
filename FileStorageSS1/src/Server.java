@@ -14,8 +14,8 @@ public class Server {
 
 			SStorageInterface stub = (SStorageInterface) UnicastRemoteObject.exportObject(obj, 0);
 
-			Registry registry = LocateRegistry.getRegistry(1099);
-			registry.bind("Storage", stub);
+			Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+			registry.bind("Storage_1", stub);
 			System.out.println("Server 1 up!");
 		} catch(Exception e){
 			e.printStackTrace();
