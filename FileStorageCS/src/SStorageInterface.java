@@ -7,5 +7,7 @@ public interface SStorageInterface extends Remote{
 	
 	public boolean sendPDF(CStorageInterface s, String name) throws RemoteException;
 	
-	public String getPDFList() throws RemoteException;	
+	public boolean deletePDF(String name) throws RemoteException;
+	
+	public String getPDFList() throws RemoteException;
 }

@@ -1,3 +1,5 @@
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
@@ -18,7 +20,7 @@ public class Client {
 			boolean stop = false;
 
 			do{
-				System.out.println("Upload PDF [1] \nList PDFs [2] \nDownload PDF [3] \nExit [4]\n");
+				System.out.println("Upload PDF [1] \nList PDFs [2] \nDownload PDF [3] \nDelete PDF [4] \nExit [5]\n");
 				Integer input = sc.nextInt();
 				sc.nextLine();
 				switch (input){
@@ -35,6 +37,10 @@ public class Client {
 					stub.sendPDF(cs, sc.nextLine());
 					break;
 				case 4:
+					System.out.println("Enter the file name: ");
+					stub.deletePDF(sc.nextLine());
+					break;
+				case 5:
 					System.out.println("Bye!");
 					stop = true;
 					break;
