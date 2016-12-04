@@ -17,6 +17,7 @@ public class Server {
 			Registry registry = LocateRegistry.getRegistry("localhost", 2001);
 			registry.bind("Storage_2", stub);
 			System.out.println("Server 2 up!");
+			obj.syncServer();
 		} catch(Exception e){
 			e.printStackTrace();
 		}

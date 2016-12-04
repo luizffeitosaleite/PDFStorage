@@ -13,10 +13,11 @@ public class Server {
 			SStorage obj = new SStorage();
 
 			SStorageInterface stub = (SStorageInterface) UnicastRemoteObject.exportObject(obj, 0);
-
+			
 			Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 			registry.bind("Storage_1", stub);
 			System.out.println("Server 1 up!");
+			obj.syncServer();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
