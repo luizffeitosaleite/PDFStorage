@@ -9,5 +9,11 @@ public interface SStorageInterface extends Remote{
 	
 	public boolean deletePDF(String name) throws RemoteException;
 	
+	public boolean addClient() throws RemoteException;
+	
+	public boolean removeClient() throws RemoteException;
+	
+	public Integer getClient() throws RemoteException;
+	
 	public String getPDFList () throws RemoteException;
 }

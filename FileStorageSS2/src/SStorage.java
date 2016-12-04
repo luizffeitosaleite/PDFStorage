@@ -5,12 +5,15 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class SStorage implements SStorageInterface {
 
-
+	Integer clients = 0;
 
 	public boolean receivePDF(String fileName, byte[] data, int len) throws RemoteException {
 		try{
@@ -23,6 +26,16 @@ public class SStorage implements SStorageInterface {
 			System.out.println("Done!");
 		} catch(Exception e){
 			e.printStackTrace();
+		}
+
+		//try connect server 2
+		try {
+			Registry r2 = LocateRegistry.getRegistry("localhost");
+			SStorageInterface stub2 = (SStorageInterface) r2.lookup("Storage_1");
+
+			stub2.receivePDF(fileName, data, len);
+		} catch (NotBoundException e1) {
+			e1.printStackTrace();
 		}
 		return true;
 	}
@@ -74,7 +87,31 @@ public class SStorage implements SStorageInterface {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+
+		//try connect server 2
+		try {
+			Registry r2 = LocateRegistry.getRegistry("localhost");
+			SStorageInterface stub2 = (SStorageInterface) r2.lookup("Storage_1");
+
+			stub2.deletePDF(name);
+		} catch (NotBoundException e1) {
+			e1.printStackTrace();
+		}
 		return true;
+	}
+
+	public boolean addClient() throws RemoteException {
+		clients++;
+		return false;
+	}
+
+	public boolean removeClient() throws RemoteException {
+		clients--;
+		return false;
+	}
+
+	public Integer getClient() throws RemoteException {
+		return clients;
 	}
 
 }
